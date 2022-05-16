@@ -101,17 +101,16 @@ class Mahjong {
                 }
                 // document.querySelector('').parentElement
                 else if (self.previousId === element && self.previousNode !== this) {
-
-
+                    self.score+=4000;
                     let counter = 0;
-                                let timer = setInterval(function () {
-                                    counter += Math.floor(self.score / 80 + 1);
-                                    scoreEl.innerHTML = `${self.score.toLocaleString('en-US', { minimumIntegerDigits: 5, useGrouping: false })}`;
-                                    if (counter >= self.score) {
-                                        scoreEl.innerHTML = `${self.score.toLocaleString('en-US', { minimumIntegerDigits: 5, useGrouping: false })}`;
-                                        clearInterval(timer);
-                                    }
-                                }, 10);
+                    let timer = setInterval(function () {
+                        counter += Math.floor(self.score / 80 + 1);
+                        scoreEl.innerHTML = `${counter.toLocaleString('en-US', { minimumIntegerDigits: 5, useGrouping: false })}`;
+                        if (counter >= self.score) {
+                            scoreEl.innerHTML = `${self.score.toLocaleString('en-US', { minimumIntegerDigits: 5, useGrouping: false })}`;
+                            clearInterval(timer);
+                        }
+                    }, 10);
                     self.tabFoundedImages.push(element);
                     self.foundedImages++;
                     this.firstChild.outerHTML = null;
@@ -186,11 +185,11 @@ const game_container = document.getElementById('game-container');
 const timeEl = document.getElementById('time');
 const scoreEl = document.getElementById('score');
 const scoreHi = document.getElementById('highest-score');
-var obj=new Mahjong;
+var obj = new Mahjong;
 
 
 function loading(btn) {
-    if (btn.getAttribute('id')=='btn-load' && localStorage.getItem('o') === null) return -1;
+    if (btn.getAttribute('id') == 'btn-load' && localStorage.getItem('o') === null) return -1;
     var counter = 0;
     var c = 0;
     screens[0].classList.add('d-none');
@@ -200,7 +199,7 @@ function loading(btn) {
         counter++;
         c++;
         if (counter == 101) {
-            btn.getAttribute('id')=='btn-new'?startGame():loadGame();
+            btn.getAttribute('id') == 'btn-new' ? startGame() : loadGame();
             clearInterval(timer);
         }
     }, 10);
@@ -209,7 +208,7 @@ function loading(btn) {
 
 function startGame() {
     var o = new Mahjong;
-    obj=o;
+    obj = o;
     screens[1].classList.add('d-none');
     screens[2].classList.remove('d-none');
     scoreHi.innerHTML = `${o.highestScore.toLocaleString('en-US', { minimumIntegerDigits: 5, useGrouping: false })}`;
@@ -225,7 +224,7 @@ function loadGame() {
     let retrievedObject = localStorage.getItem('o');
     var o = Object.assign(new Mahjong, JSON.parse(retrievedObject));
     o.highestScore = +localStorage.getItem('highestScore');
-    obj=o;
+    obj = o;
     timeEl.innerHTML = `${Math.floor(o.seconds / 60).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}:${(o.seconds % 60).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
     o.seconds++;
     scoreEl.innerHTML = `${o.score.toLocaleString('en-US', { minimumIntegerDigits: 5, useGrouping: false })}`;
